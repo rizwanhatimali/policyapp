@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  policy-service:
+    container_name: axa-xl-policy-service
+    image: policy-service
+    build:
+      context: .
+      dockerfile: Api/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development  # or Staging/Production/DR
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - REGION=${REGION}
+      - CONNECTION_STRING=${CONNECTION_STRING}
+    ports:
+      - "5000:80"
