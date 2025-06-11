@@ -26,7 +26,8 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-
+app.MapGet("/", () => "Hello from Policy API!");
+app.MapGet("/info", () => "Info from Policy API!");
 
 using (var scope = app.Services.CreateScope())
 {
@@ -34,12 +35,8 @@ using (var scope = app.Services.CreateScope())
     db.Database.Migrate();
 }
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
