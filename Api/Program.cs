@@ -29,12 +29,6 @@ var app = builder.Build();
 app.MapGet("/", () => "Hello from Policy API!");
 app.MapGet("/info", () => "Info from Policy API!");
 
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<PolicyDbContext>();
-    db.Database.Migrate();
-}
-
 app.UseSwagger();
 app.UseSwaggerUI();
 
