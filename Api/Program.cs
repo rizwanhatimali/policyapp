@@ -18,7 +18,8 @@ var tempLogger = tempLoggerFactory.CreateLogger("Startup");
 tempLogger.LogInformation("Connection string from environment: {ConnectionString}", connectionString);
 
 builder.Services.AddDbContext<PolicyDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlServer(connectionString,
+        sqlOptions => sqlOptions.EnableRetryOnFailure()));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
