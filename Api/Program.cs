@@ -21,14 +21,15 @@ builder.Services.AddDbContext<PolicyDbContext>(options =>
     options.UseSqlServer(connectionString,
         sqlOptions => sqlOptions.EnableRetryOnFailure()));
 
-tempLogger.LogInformation("Temp Removed all db connectivity");
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 tempLogger.LogInformation("Swagger endpoint exposed for all env");
 
 var app = builder.Build();
+
+app.MapGet("/", () => "Hello from Policy API!");
+app.MapGet("/info", () => "Info from Policy API!");
 
 using (var scope = app.Services.CreateScope())
 {
