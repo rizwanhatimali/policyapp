@@ -17,13 +17,19 @@ var tempLoggerFactory = LoggerFactory.Create(logging =>
 var tempLogger = tempLoggerFactory.CreateLogger("Startup");
 tempLogger.LogInformation("Connection string recieved from environment: {ConnectionString}", connectionString);
 
+tempLogger.LogInformation("Temp Removed all db connectivity");
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+tempLogger.LogInformation("Swagger endpoint exposed for all env");
 
 var app = builder.Build();
 
 app.MapGet("/", () => "Hello from Policy API!");
 app.MapGet("/info", () => "Info from Policy API!");
+
+tempLogger.LogInformation("default and info endpoint exposed");
 
 app.UseSwagger();
 app.UseSwaggerUI();
