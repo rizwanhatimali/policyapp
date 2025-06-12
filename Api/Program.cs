@@ -15,7 +15,11 @@ var tempLoggerFactory = LoggerFactory.Create(logging =>
     logging.AddConsole();
 });
 var tempLogger = tempLoggerFactory.CreateLogger("Startup");
-tempLogger.LogInformation("Connection string recieved from environment: {ConnectionString}", connectionString);
+tempLogger.LogInformation("Connection string from environment: {ConnectionString}", connectionString);
+
+builder.Services.AddDbContext<PolicyDbContext>(options =>
+    options.UseSqlServer(connectionString,
+        sqlOptions => sqlOptions.EnableRetryOnFailure()));
 
 tempLogger.LogInformation("Temp Removed all db connectivity");
 
