@@ -23,13 +23,15 @@ builder.Services.AddDbContext<PolicyDbContext>(options =>
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddHealthChecks();
 
 tempLogger.LogInformation("Swagger endpoint exposed for all env");
 
 var app = builder.Build();
 
 app.MapGet("/", () => "Hello from Policy API!");
-app.MapGet("/info", () => "Info from Policy API!");
+
+tempLogger.LogInformation("default endpoint exposed");
 
 using (var scope = app.Services.CreateScope())
 {
@@ -37,7 +39,7 @@ using (var scope = app.Services.CreateScope())
     db.Database.Migrate();
 }
 
-tempLogger.LogInformation("default and info endpoint exposed");
+app.MapHealthChecks("/health");
 
 app.UseSwagger();
 app.UseSwaggerUI();
